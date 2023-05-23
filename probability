@@ -1,1 +1,53 @@
 
+import numpy as np
+import random as rd
+import matplotlib.pyplot as plt
+
+n = 3
+
+lista = list(range(1,7))
+N= 1000000
+succes = [None]*N
+#los2 = np.random.randint(1,7,size=(N,3))
+#proba = np.sort(los2)
+i=0
+while i < N:
+    proba = rd.sample(lista,n)
+    sortowanie = sorted(proba)
+    succes[i] = np.where(proba==sortowanie,1,0)
+    i = i + 1
+np_succes = np.array(succes)
+print('Prawdopodobienstwo wynosi {0}' .format(np_succes.sum()/N))
+
+np_succes = np_succes.cumsum()
+np_succes = np_succes /np.arange(1,N+1,1)
+plt.plot(np_succes[:2000])
+
+#####
+
+import numpy as np
+import random as rd
+import matplotlib.pyplot as plt
+
+n = 1
+M = 6
+
+lista = list(range(1,7))
+N= 100000
+succes = [None]*N
+dpd=[None]*M
+
+i=0
+while i < M:
+    j=0
+    while j<N:
+        proba = rd.sample(lista,n)
+        sortowanie = sorted(proba)
+        succes[j] = np.where(proba==sortowanie,1,0)
+        j = j + 1
+    n =  n+1
+    np_succes = np.array(succes)
+    dpd[i] = np_succes.sum()/N
+    i=i+1
+
+plt.scatter(lista,dpd)
